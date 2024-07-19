@@ -1,4 +1,3 @@
-import json
 import logging
 import os
 from datetime import datetime, timedelta
@@ -35,7 +34,7 @@ def read_transactions_from_xlsx(file_path: str) -> pd.DataFrame | List:
         return []
 
 
-df = read_transactions_from_xlsx("../data/operations.xlsx")
+# df = read_transactions_from_xlsx("../data/operations.xlsx")
 
 
 def get_greeting() -> str:
@@ -110,10 +109,7 @@ def get_stock_prices(stocks: List[str]) -> List[Dict[str, float]]:
 
 
 # print(get_greeting(datetime.now()))
-# with open('../user_settings.json') as f:
-#     data_ = json.load(f)
-#
 # print(get_info_cards(df))
 # print(top_transactions(df))
-# print(get_currency_rates(data_["user_currencies"]))
-# print(get_stock_prices(data_["user_stocks"]))
+# print(get_currency_rates(data["user_currencies"]))
+# print(get_stock_prices(data["user_stocks"]))
