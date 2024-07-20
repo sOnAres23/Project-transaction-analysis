@@ -8,16 +8,17 @@ from src.utils import read_transactions_from_xlsx
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s: %(name)s %(funcName)s - %(levelname)s - %(message)s",
-    filename="../logs/reports.txt",
+    filename="../logs/reports.log",
     filemode="w",
 )
 
 decorator_logger = logging.getLogger("spending_result")
-spending_by_category_logger = logging.getLogger("spending_by_category")
+logger = logging.getLogger("reports.py")
 info_df = read_transactions_from_xlsx("../data/operations.xlsx")  # Открываем файл с операциями
 
 
 def spending_result(path_file: str = "../data/spending_result.csv"):
+    """Функция-декоратор, для функции, которая возвращает траты по заданной категории за последние три месяца """
     def decorator(func):
         def wrapper(*args, **kwargs):
             result = func(*args, **kwargs)
@@ -58,8 +59,8 @@ def spending_by_category(transactions: pd.DataFrame, category: str, date: str = 
 
     sort_by_category = file_to_data[(file_to_data["Категория"] == category)]
 
-    spending_by_category_logger.info("Функция отработала, вернула результат")
+    logger.info("Функция отработала, вернула результат")
     return pd.DataFrame(sort_by_category)
 
 
-# print(spending_by_category(info_df, "Фастфуд", "20.05.2020"))
+print(spending_by_category(info_df, "Фастфуд", "20.05.2020"))

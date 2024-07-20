@@ -1,3 +1,4 @@
+import json
 import logging
 import os
 from datetime import datetime, timedelta
@@ -11,11 +12,11 @@ load_dotenv('../.env')
 
 API_KEY_VALUES = os.getenv('API_KEY_VALUES')
 API_KEY_STOCKS = os.getenv('API_KEY_STOCKS')
-"""Создаем логгер для логирования функций и записываем логи в директорию logs"""
-logging.basicConfig(level=logging.DEBUG,
-                    format='%(asctime)s: %(name)s %(funcName)s - %(levelname)s - %(message)s',
-                    filename='../logs/utils.log',  # Запись логов в файл
-                    filemode='w')  # Перезапись файла при каждом запуске
+# """Создаем логгер для логирования функций и записываем логи в директорию logs"""
+# logging.basicConfig(level=logging.DEBUG,
+#                     format='%(asctime)s: %(name)s %(funcName)s - %(levelname)s - %(message)s',
+#                     filename='../logs/utils.log',  # Запись логов в файл
+#                     filemode='w')  # Перезапись файла при каждом запуске
 logger = logging.getLogger("utils.py")
 
 
@@ -38,7 +39,7 @@ def read_transactions_from_xlsx(file_path: str) -> pd.DataFrame | List:
 
 
 def get_greeting() -> str:
-    """Функция приветствие в зависимости от текущего времени пользователя"""
+    """Функция, которая приветствует пользователя в зависимости от текущего времени"""
     hour = datetime.now().hour
     logger.info("Делаем приветствие...")
     if 5 <= hour < 12:
@@ -108,8 +109,11 @@ def get_stock_prices(stocks: List[str]) -> List[Dict[str, float]]:
     return prices
 
 
-# print(get_greeting(datetime.now()))
+# with open("../user_settings.json", encoding="utf-8") as f:  # открываем польз. настройки по акциям и валютам
+#     load_json_info = json.load(f)
+
+# print(get_greeting())
 # print(get_info_cards(df))
 # print(top_transactions(df))
-# print(get_currency_rates(data["user_currencies"]))
-# print(get_stock_prices(data["user_stocks"]))
+# print(get_currency_rates(load_json_info["user_currencies"]))
+# print(get_stock_prices(load_json_info["user_stocks"]))

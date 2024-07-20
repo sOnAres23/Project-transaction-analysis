@@ -1,7 +1,7 @@
 import logging
 
 import pandas as pd
-from utils import read_transactions_from_xlsx
+from src.utils import read_transactions_from_xlsx
 
 
 """Создаем логгер для логирования функций и записываем логи в директорию logs"""
@@ -13,13 +13,13 @@ logger = logging.getLogger("services.py")
 
 
 def filtering_by_search(search_string: str) -> pd.DataFrame:
-    """Фильтруем транзакции по строке поиска"""
+    """Функция, которая фильтрует транзакции по строке поиска"""
     try:
-        file_operation = read_transactions_from_xlsx("../data/operations.xlsx")
+        info_df = read_transactions_from_xlsx("../data/operations.xlsx")
 
-        search_operations = file_operation.loc[
-            (file_operation["Категория"] == search_string.title())
-            | (file_operation["Описание"] == search_string.title())
+        search_operations = info_df.loc[
+            (info_df["Категория"] == search_string.title())
+            | (info_df["Описание"] == search_string.title())
         ]
         logger.info("Функция отработала корректно")
         return search_operations
@@ -27,4 +27,4 @@ def filtering_by_search(search_string: str) -> pd.DataFrame:
         logger.warning("функция не отработала, ошибка")
 
 
-# print(filtering_by_search('Связь'))
+print(filtering_by_search('Связь'))
