@@ -1,3 +1,5 @@
+import pytest
+
 from src.utils import get_currency_rates, get_stock_prices
 from unittest.mock import patch
 
@@ -16,8 +18,22 @@ def test_get_currency_rates_eur(mock_get, get_currency_eur, get_requests_eur):
     assert get_currency_rates(list_currency) == get_currency_eur
 
 
-@patch('requests.get')
-def test_get_stock_prices(mock_get, get_stocks_aapl, get_requests_aapl):
-    mock_get.return_value.json.return_value = get_requests_aapl
-    list_currency = ["AAPL"]
-    assert get_stock_prices(list_currency) == get_stocks_aapl
+@pytest.mark.parametrize("list_currency, expected", [
+    (["AAPL"], [{'stock': 'AAPL', 'price': '224.31000'}])
+])
+def test_get_stock_prices_aapl(list_currency, expected):
+    assert get_stock_prices(list_currency) == expected
+
+
+@pytest.mark.parametrize("list_currency, expected", [
+    (["MSFT"], [{'stock': 'MSFT', 'price': '437.10999'}])
+])
+def test_get_stock_prices_msft(list_currency, expected):
+    assert get_stock_prices(list_currency) == expected
+
+
+@pytest.mark.parametrize("list_currency, expected", [
+    (["NVDA"], [{'stock': 'NVDA', 'price': '117.93000'}])
+])
+def test_get_stock_prices_nvda(list_currency, expected):
+    assert get_stock_prices(list_currency) == expected
