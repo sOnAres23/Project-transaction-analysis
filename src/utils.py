@@ -92,7 +92,7 @@ def get_stock_prices(stocks: List[str]) -> List[Dict[str, float]]:
     """Функция, которая принимает список Акций из пользовательских настроек,
     и возвращает стоимость акций в $ на конец дня"""
     prices = []
-    d = datetime.now() - timedelta(days=1)
+    d = datetime.now() - timedelta(days=3)
     date_str = d.strftime('%Y-%m-%d %H:%M:%S')
     for stock in stocks:
         try:
