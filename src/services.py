@@ -24,7 +24,7 @@ def filtering_by_search(search_string: str) -> pd.DataFrame:
         logger.info("Функция отработала корректно")
         return search_operations
     except ExceptionGroup:
-        logger.warning("функция не отработала, ошибка")
+        logger.warning("Функция не отработала, ошибка")
 
 
-print(filtering_by_search('Связь'))
+print(filtering_by_search(input()))

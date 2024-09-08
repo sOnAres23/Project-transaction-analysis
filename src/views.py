@@ -19,7 +19,7 @@ def views(date: str) -> str:
     sort_file = info_df.sort_values(by="Дата платежа", ascending=True)
 
     date_obj = datetime.strptime(date, "%d.%m.%Y")
-    new_date_obj = date_obj.replace(day=1)
+    new_date_obj = date_obj.replace(day=2)
 
     slice_time_last = date_obj.strftime("%d.%m.%Y")
     slice_time_first = new_date_obj.strftime("%d.%m.%Y")
@@ -43,5 +43,5 @@ def views(date: str) -> str:
     return json.dumps(information_user, ensure_ascii=False, indent=4)
 
 
-# if __name__ == "__main__":
-#     print(views('22.05.2020'))
+if __name__ == "__main__":
+    print(views('23.04.2022'))
