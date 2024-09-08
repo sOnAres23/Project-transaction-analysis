@@ -71,7 +71,7 @@ def top_transactions(operations_xlsx: pd.DataFrame) -> list[dict]:
 
 
 def get_currency_rates(currencies: List[str]) -> List[Dict[str, float]]:
-    """ Функция, которая принимает список Валют из пользовательских настроек,
+    """Функция, которая принимает список Валют из пользовательских настроек,
     делает запрос и возвращает список со стоимостью каждой валюты по курсу на сегодня"""
     rates = []
     for currency in currencies:
@@ -92,8 +92,15 @@ def get_stock_prices(stocks: List[str]) -> List[Dict[str, float]]:
     """Функция, которая принимает список Акций из пользовательских настроек,
     и возвращает стоимость акций в $ на конец дня"""
     prices = []
-    d = datetime.now() - timedelta(days=3)
-    date_str = d.strftime('%Y-%m-%d %H:%M:%S')
+    if datetime.weekday(datetime.now()) == 6:
+        d = datetime.now() - timedelta(days=2)
+        date_str = d.strftime('%Y-%m-%d %H:%M:%S')
+    elif datetime.weekday(datetime.now()) == 5:
+        d = datetime.now() - timedelta(days=1)
+        date_str = d.strftime('%Y-%m-%d %H:%M:%S')
+    else:
+        d = datetime.now()
+        date_str = d.strftime('%Y-%m-%d %H:%M:%S')
     for stock in stocks:
         try:
             logger.info("Делаем запрос...")
@@ -109,11 +116,5 @@ def get_stock_prices(stocks: List[str]) -> List[Dict[str, float]]:
     return prices
 
 
-# with open("../user_settings.json", encoding="utf-8") as f:  # открываем польз. настройки по акциям и валютам
-#     load_json_info = json.load(f)
-
-# print(get_greeting())
-# print(get_info_cards(df))
-# print(top_transactions(df))
-# print(get_currency_rates(load_json_info["user_currencies"]))
-# print(get_stock_prices(load_json_info["user_stocks"]))
+with open("../user_settings.json", encoding="utf-8") as f:  # открываем польз. настройки по акциям и валютам
+    load_json_info = json.load(f)
